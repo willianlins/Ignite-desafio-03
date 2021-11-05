@@ -24,11 +24,15 @@ interface CartItemsAmount {
 
 const Home = (): JSX.Element => {
   const [products, setProducts] = useState([]);
-   const { addProduct, cart } = useCart();
+  const { addProduct, cart } = useCart();
 
   // const cartItemsAmount = cart.reduce((sumAmount, product) => {
   //   // TODO
   // }, {} as CartItemsAmount)
+
+  // useEffect(() => {
+  //   console.log(cart)
+  // },[cart])
 
 
   useEffect(() => {
@@ -36,8 +40,6 @@ const Home = (): JSX.Element => {
       await api.get<ProductFormatted>('products')
         .then((response: AxiosResponse) => setProducts(response.data))
     }
-
-    addProduct(1)
     loadProducts();
   }, []);
 
@@ -45,21 +47,21 @@ const Home = (): JSX.Element => {
 
 
   function handleAddProduct(id: number) {
-    // TODO
+    addProduct(id)
   }
 
   return (
     <ProductList>
-      {products.map((prod: ProductFormatted) => {
+      {products.map((product: ProductFormatted) => {
         return (
-          <li key={prod.id}>
-            <img src={prod.image} alt={prod.title} />
-            <strong>{prod.title}</strong>
-            <span>{prod.price}</span>
+          <li key={product.id}>
+            <img src={product.image} alt={product.title} />
+            <strong>{product.title}</strong>
+            <span>{product.price}</span>
             <button
               type="button"
               data-testid="add-product-button"
-            // onClick={() => handleAddProduct(product.id)}
+              onClick={() => handleAddProduct(product.id)}
             >
               <div data-testid="cart-product-quantity">
                 <MdAddShoppingCart size={16} color="#FFF" />
