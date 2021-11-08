@@ -35,32 +35,53 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
   const addProduct = async (productId: number) => {
     try {
 
-
+      const { data: stockData } = await api.get<Stock>(`/stock/${productId}`)
       const { data } = await api.get(`/products/${productId}`)
+
 
       const dataCart = {
         amount: 1,
         ...data
       }
 
-      // cart.map<UpdateProductAmount>((element) => {
-      //   if(element.id === productId){
-      //     return {
-      //       amount: amount =+1,
-      //       ...element
-      //     }
-      //   }
-      // })
+      const cartLocalStorage: Product[] = JSON.parse(String(localStorage.getItem('@RocketShoes:cart'))) || [{}];
 
 
+      cartLocalStorage.forEach((item) => {
+        if (productId === item.id) {
+          if(item.amount >= stockData.amount){
+            toast.error('Quantidade solicitada fora de estoque');
+          }else{
+            item.amount++
+          }
+        }
+      })
 
-      localStorage.setItem(
-        '@RocketShoes:cart',
-        JSON.stringify([
-          ...JSON.parse('ssa'),
-          dataCart
-        ])
-      )
+
+      const exist = cartLocalStorage.find((item) => {
+        if (productId === item.id)
+          return true
+
+        return false
+      })
+
+      if (exist === undefined) {
+        localStorage.setItem(
+          '@RocketShoes:cart',
+          JSON.stringify([
+            ...cartLocalStorage,
+            dataCart
+          ])
+        )
+      } else {
+        localStorage.setItem(
+          '@RocketShoes:cart',
+          JSON.stringify([
+            ...cartLocalStorage
+          ])
+        )
+
+      }
     } catch {
       toast.error('Erro na adição do produto');
     }
@@ -69,9 +90,16 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
   const removeProduct = (productId: number) => {
     try {
 
+      const cartLocalStorage: Product[] = JSON.parse(String(localStorage.getItem('@RocketShoes:cart'))) || [{}];
 
+      const newCartLocalStorage = cartLocalStorage.filter(el => (el.id !== productId) && el);
 
-
+      localStorage.setItem(
+          '@RocketShoes:cart',
+          JSON.stringify([
+            ...newCartLocalStorage
+          ])
+        )
 
     } catch {
       toast.error('Erro na remoção do produto');

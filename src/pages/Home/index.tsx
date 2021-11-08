@@ -24,7 +24,7 @@ interface CartItemsAmount {
 
 const Home = (): JSX.Element => {
   const [products, setProducts] = useState([]);
-  const { addProduct, cart } = useCart();
+  const { addProduct, cart, removeProduct } = useCart();
 
   // const cartItemsAmount = cart.reduce((sumAmount, product) => {
   //   // TODO
@@ -47,8 +47,9 @@ const Home = (): JSX.Element => {
 
 
   function handleAddProduct(id: number) {
-    addProduct(id)
-  }
+    //addProduct(id)
+    removeProduct(id) 
+   }
 
   return (
     <ProductList>
