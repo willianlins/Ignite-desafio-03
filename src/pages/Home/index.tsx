@@ -24,7 +24,7 @@ interface CartItemsAmount {
 
 const Home = (): JSX.Element => {
   const [products, setProducts] = useState([]);
-  const { addProduct, cart, removeProduct } = useCart();
+  const { addProduct, cart} = useCart();
 
   // const cartItemsAmount = cart.reduce((sumAmount, product) => {
   //   // TODO
@@ -47,8 +47,7 @@ const Home = (): JSX.Element => {
 
 
   function handleAddProduct(id: number) {
-    //addProduct(id)
-    removeProduct(id) 
+    addProduct(id)
    }
 
   return (
@@ -66,7 +65,7 @@ const Home = (): JSX.Element => {
             >
               <div data-testid="cart-product-quantity">
                 <MdAddShoppingCart size={16} color="#FFF" />
-                {/* {cartItemsAmount[product.id] || 0} */} 2
+                {/* {cartItemsAmount[product.id] || 0} */} 1
               </div>
 
               <span>ADICIONAR AO CARRINHO</span>

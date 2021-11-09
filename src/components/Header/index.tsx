@@ -8,7 +8,6 @@ import { useCart } from '../../hooks/useCart';
 
 const Header = (): JSX.Element => {
   const { cart } = useCart();
-  const cartSize = 1;
 
  
   return (
@@ -21,7 +20,7 @@ const Header = (): JSX.Element => {
         <div>
           <strong>Meu carrinho</strong>
           <span data-testid="cart-size">
-            {cartSize === 1 ? `${cartSize} item` : `${cartSize} itens`}
+            {`${cart.length === 0 ? cart.length : cart.length -1 } ${cart.length > 2 ? 'itens' : 'item'}`}
           </span>
         </div>
         <MdShoppingBasket size={36} color="#FFF" />
