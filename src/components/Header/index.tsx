@@ -19,7 +19,7 @@ const Header = (): JSX.Element => {
         <div>
           <strong>Meu carrinho</strong>
           <span data-testid="cart-size">
-            {`${cart.length === 0 ? cart.length : cart.length -1 } ${cart.length > 2 ? 'itens' : 'item'}`}
+            {`${cart.length === 0 ? cart.length : cart.length } ${cart.length > 1 ? 'itens' : 'item'}`}
           </span>
         </div>
         <MdShoppingBasket size={36} color="#FFF" />

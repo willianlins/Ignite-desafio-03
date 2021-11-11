@@ -67,7 +67,6 @@ export function CartProvider({ children }: CartProviderProps): JSX.Element {
           return false
         })
       }
-      console.log('aqui')
 
       if (exist === undefined) {
         if (cartLocalStorage === null) {
